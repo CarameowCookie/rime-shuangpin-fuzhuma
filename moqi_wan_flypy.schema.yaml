@@ -102,7 +102,7 @@ key_binder:
 
     - { match: "[a-z]{1,3}", accept: Tab,  send_sequence: "/1" }
     - { match: "[a-z]{1,3}", accept: "/",  send_sequence: "/1" }
-    - { match: "[a-z]{1,3}", accept: ".",  send_sequence: "/1" }
+    # - { match: "[a-z]{1,3}", accept: ".",  send_sequence: "/1" }
     # - { when: composing, match: "[a-z]{2}", accept: Tab, send: '|' }
 
     ## 启用光标回退至特定音节后、补充辅助码的功能。补充完辅助码后，可以再按一次tab回到整句检查
