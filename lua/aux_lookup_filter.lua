@@ -257,7 +257,7 @@ end
 
 function M.init(env)
     local config = env.engine.schema.config
-    env.trigger_key = config:get_string("aux_lookup_filter/trigger_key") or "`"
+    env.trigger_key = config:get_string("aux_lookup_filter/trigger_key") or "`" or "@"
     env.enabled = config:get_bool("aux_lookup_filter/enabled")
     if env.enabled == nil then
         env.enabled = config:get_bool("pro_comment_format/fuzhu_code") or false
