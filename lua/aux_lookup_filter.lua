@@ -1,3 +1,5 @@
+-- 由 DeepSeek 修改生成
+
 -- 句中任意辅助码候选筛选滤镜。
 --
 -- 用法：
@@ -9,11 +11,13 @@
 --
 --     shishi`b  -> 事实 / 实施 / 实时 ...
 --     ni`rx     -> 你 / 伱
+--     同时支持 ` 或 @ 作为触发键：
+--     shishi@b  -> 同样效果
 --
 -- 配置：
 --
 --   aux_lookup_filter:
---     trigger_key: "`"
+--     trigger_key: "`"   -- 此配置项不再影响触发键检测，始终支持 ` 和 @
 --     aux_type: flypy
 --
 -- aux_type 默认读取 pro_comment_format/fuzhu_type；是否启用默认跟随
@@ -255,8 +259,20 @@ local function candidate_matches_positions(aux_table, chars, aux, positions)
     return false
 end
 
+-- 辅助函数：在字符串中查找第一个 ` 或 @ 的位置
+local function find_trigger_pos(input_str)
+    local pos_backtick = input_str:find("`", 1, true)
+    local pos_at = input_str:find("@", 1, true)
+    if pos_backtick and pos_at then
+        return math.min(pos_backtick, pos_at)
+    else
+        return pos_backtick or pos_at
+    end
+end
+
 function M.init(env)
     local config = env.engine.schema.config
+    -- 仍然读取配置，以保持兼容性，但不再用于触发键检测
     env.trigger_key = config:get_string("aux_lookup_filter/trigger_key") or "`"
     env.enabled = config:get_bool("aux_lookup_filter/enabled")
     if env.enabled == nil then
@@ -266,19 +282,19 @@ function M.init(env)
         or config:get_string("pro_comment_format/fuzhu_type")
         or "moqi"
 
+    -- 修改：监听输入，当出现 ` 或 @ 时自动提交之前的编码
     env.notifier = env.engine.context.select_notifier:connect(function(ctx)
         if not env.enabled then
             return
         end
 
-        local trigger_pos = ctx.input:find(env.trigger_key, 1, true)
+        local trigger_pos = find_trigger_pos(ctx.input)  -- 改为使用辅助函数
         if not trigger_pos then
             return
         end
 
-        local trigger_pattern = escape_pattern(env.trigger_key)
-        local input_without_aux = ctx.input:match("^(.-)" .. trigger_pattern)
-        if input_without_aux and input_without_aux ~= "" then
+        local input_without_aux = ctx.input:sub(1, trigger_pos - 1)
+        if input_without_aux ~= "" then
             ctx.input = input_without_aux
             ctx:commit()
         end
@@ -298,13 +314,15 @@ function M.func(input, env)
     end
 
     local input_code = env.engine.context.input
-    local trigger_pos = input_code:find(env.trigger_key, 1, true)
+    -- 修改：同时检测 ` 和 @
+    local trigger_pos = find_trigger_pos(input_code)
     if not trigger_pos then
         pass_through(input)
         return
     end
 
-    local aux = input_code:sub(trigger_pos + #env.trigger_key):match("^([^,']+)") or ""
+    -- 辅助码从触发键后一位开始，取最多2位，且不包含逗号和单引号
+    local aux = input_code:sub(trigger_pos + 1):match("^([^,']+)") or ""
     aux = aux:sub(1, 2)
     if aux == "" then
         pass_through(input)
