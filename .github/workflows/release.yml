@@ -71,18 +71,18 @@ jobs:
         asset_content_type: application/zip
         upload_url: ${{ github.event.release.upload_url }}
 
-    - name: Publish nightly release
-      if: github.event_name == 'push'
-      uses: ncipollo/release-action@v1
-      with:
-        allowUpdates: true
-        artifactErrorsFailBuild: true
-        artifacts: rime-moqi-schemas.zip,shouxin-moqi-aux-code-for-shouxin-input-method.txt,rime-reverse-and-english-and-emoji.zip
-        body: |
-          Automated nightly build from `main`.
+    # - name: Publish nightly release
+    #   if: github.event_name == 'push'
+    #   uses: ncipollo/release-action@v1
+    #   with:
+    #     allowUpdates: true
+    #     artifactErrorsFailBuild: true
+    #     artifacts: rime-moqi-schemas.zip,shouxin-moqi-aux-code-for-shouxin-input-method.txt,rime-reverse-and-english-and-emoji.zip
+    #     body: |
+    #       Automated nightly build from `main`.
 
-          Commit: ${{ github.sha }}
-        name: Nightly Build
-        prerelease: true
-        replacesArtifacts: true
-        tag: nightly
+    #       Commit: ${{ github.sha }}
+    #     name: Nightly Build
+    #     prerelease: true
+    #     replacesArtifacts: true
+    #     tag: nightly
