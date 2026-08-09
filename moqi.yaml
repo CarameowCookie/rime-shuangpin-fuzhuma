@@ -104,7 +104,8 @@ switches_engine:
       - uniquifier
 
 grammar:
-  language: rime-moqi-zh  # 这个很小几乎不起作用但是不能不配置，为了让non_collocation_penalty生效（只要有值就行 不过模型不存在日志里会报错）
+  #language: zh-moqi  # 这个很小几乎不起作用但是不能不配置，为了让non_collocation_penalty生效（只要有值就行 不过模型不存在日志里会报错）
+  language: wanxiang-lts-zh-hans  # 万象语法模型
   non_collocation_penalty: -4           # 重要！！！！  这个值非常重要，是整句时的组词惩罚，默认值-12惩罚太大了，不适合白霜词库
 
 octagram:
@@ -118,7 +119,8 @@ octagram:
         # language: zh-hans-t-huayu-v7-bgw # 华宇模型
         # language: zh-hans-wiki-202405 # 维基模型
         # language: zh-hans-t-essay-bgw # rime官方模型
-        language: rime-moqi-zh # 墨奇训练的模型 聊胜于无 主要目的是让non_collocation_penalty生效
+        #language: zh-moqi # 墨奇训练的模型 聊胜于无 主要目的是让non_collocation_penalty生效
+        language: wanxiang-lts-zh-hans  # 万象语法模型
         # collocation_max_length: 5
         # collocation_min_length: 2
         non_collocation_penalty: -4
