@@ -17,13 +17,14 @@
 
 [墨奇音形大词库版](https://my-rime.vercel.app/?plum=gaboolic/rime-shuangpin-fuzhuma@master:moqi_wan_flypymo) (词库多，加载较慢)
 
-- [此仓库](https://github.com/gaboolic/rime-shuangpin-fuzhuma)为rime配置文件,词库使用[白霜词库](https://github.com/gaboolic/rime-frost)，实现自然码双拼、小鹤双拼、搜狗双拼、微软双拼等多种双拼，以及墨奇码（原创拆分开源支持4万字）、自然码部首辅、小鹤音形（鹤形辅）多种辅助码。本人日常用的是此仓库的方案，高强度使用，所以更新有保证。
-- 配置文件参考[小鹤双拼+自然快手/小鹤双形辅助码](https://github.com/functoreality/rime-flypy-zrmfast)
-- [魔改自然碼 Rime 方案 (自然碼雙拼+輔助碼+外語混輸+簡繁方案+emoji)](https://github.com/ksqsf/rime-moran)
+- [此仓库](https://github.com/gaboolic/rime-shuangpin-fuzhuma)为rime配置文件,词库使用[白霜词库](https://github.com/gaboolic/rime-frost)，实现自然码双拼、小鹤双拼、搜狗双拼、微软双拼等多种双拼，以及墨奇码（原创拆分开源支持4万字）、自然码部首辅、小鹤音形（[野鹤](https://github.com/qqj-jj/yehe)辅助码支持 4 万字）多种辅助码。本人日常用的是此仓库的方案，高强度使用，所以更新有保证。
+- 配置文件参考
+  - [小鹤双拼+自然快手/小鹤双形辅助码](https://github.com/functoreality/rime-flypy-zrmfast)
+  - [魔改自然碼 Rime 方案 (自然碼雙拼+輔助碼+外語混輸+簡繁方案+emoji)](https://github.com/ksqsf/rime-moran)
 - 主要配置文件:
   - schema: moqi_wan_flypymo # 墨奇辅助码 鹤拼版 大词库版本 非自动上屏，支持4万字
   - schema: moqi_wan_zrm # 自然码+自然码部首辅助码 非自动上屏，支持4万字
-  - schema: moqi_wan_flypy # 鹤形+鹤拼, 小鹤官方就只有8000字左右
+  - schema: moqi_wan_flypy # 鹤形+鹤拼，大词库版本 非自动上屏，支持4万字
   - schema: moqi_single_xh # 墨奇码·顶屏版·小鹤双拼，为了4码自动上屏 只收录了8000字
 - 写给选择困难症：如果第一次接触双拼，直接使用`moqi_wan_flypymo.schema.yaml`，墨奇辅助码 鹤拼版，这是作者用的方案;如果追求类似五笔的4码自动上屏体验，则使用`moqi_single_xh`墨奇码·顶屏版;本项目支持任意双拼和任意辅助码组合，选择自己熟悉的就好。
 - 注意：默认关了用户词库（为了固定词频），如有需要，修改`你使用的方案.schema.yaml enable_user_dict: true`开启
@@ -60,6 +61,18 @@
 
 - ℞ 安装或更新全部文件 执行`bash rime-install gaboolic/rime-shuangpin-fuzhuma:recipes/full`
 - ℞ 安装或更新所有的词库文件 执行`bash rime-install gaboolic/rime-shuangpin-fuzhuma:recipes/all_dicts`
+
+### 小鹤双拼·十四键（可选）
+
+在支持对应布局的前端选择 `moqi_wan_flypymo_14key`；原来的 `moqi_wan_flypymo` 仍是默认的 26 键方案。「完整安装」配方和默认方案列表均已包含十四键；若自定义过方案列表，请加入 `moqi_wan_flypymo_14key` 后重新部署。
+
+| 合键布局 | 发给 Rime 的 ASCII 键码 |
+| --- | --- |
+| `QW ER TY UI OP` | `q e t u o` |
+| `AS DF GH JK L` | `a d g j l` |
+| `ZX CV BN M` | `z c b m` |
+
+按小鹤双拼的原码所在的键输入，例如「你好」的 `nihc` 按 `BN UI GH CV`，即 `bugc`。支持 `'` 分音节、`/` 符号引导。原有墨奇辅助码规则按同一张表折叠：双拼后可追加一位形码，或追加两位形码再按 `/`；也可用反引号 `` ` `` 后接一至两位形码筛选当前候选。提示仍显示原始墨奇辅助码。合键会合并音码和形码候选，不能区分同一键上的两个字母（例如 `h` 和 `g`）；需要原码精度时请用 26 键方案。十四键不沿用 26 键专用的固定简码、首字母引导反查及其他字母触发工具，以免抢占正常双拼。
 
 ### 输入效果
 
@@ -213,4 +226,5 @@ az部件组字模式使用的词典 <https://github.com/mirtlecn/rime-radical-pi
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=gaboolic/rime-shuangpin-fuzhuma&type=Date)](https://star-history.com/#gaboolic/rime-shuangpin-fuzhuma&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=gaboolic/rime-shuangpin-fuzhuma&type=Date)](https://star-history.dera.page/#gaboolic/rime-shuangpin-fuzhuma&Date)
+
